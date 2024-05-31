@@ -23,6 +23,7 @@ option(LIB_PROTO_MUTATOR_DOWNLOAD_PROTOBUF
        "Automatically download working protobuf" OFF)
 option(LIB_PROTO_MUTATOR_WITH_ASAN "Enable address sanitizer" OFF)
 option(PKG_CONFIG_PATH "Directory to install pkgconfig file" "share/pkgconfig")
+option(LIB_PROTO_MUTATOR_EXAMPLES "Build examples" ON)
 set(LIB_PROTO_MUTATOR_FUZZER_LIBRARIES "" CACHE STRING "Fuzzing engine libs")
 
 # External dependencies
@@ -36,11 +37,13 @@ include(CheckCXXCompilerFlag)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads)
 
-find_package(LibLZMA)
-include_directories(${LIBLZMA_INCLUDE_DIRS})
+if (LIB_PROTO_MUTATOR_TESTING OR LIB_PROTO_MUTATOR_EXAMPLES)
+  find_package(ZLIB REQUIRED)
+endif()
 
-find_package(ZLIB)
-include_directories(${ZLIB_INCLUDE_DIRS})
+if (LIB_PROTO_MUTATOR_EXAMPLES)
+  find_package(LibLZMA REQUIRED)
+endif()
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -129,6 +132,8 @@ else()
   find_package(Protobuf REQUIRED)
   include_directories(${PROTOBUF_INCLUDE_DIRS})
   include_directories(${CMAKE_CURRENT_BINARY_DIR})
+
+  find_package(absl CONFIG REQUIRED)
 endif()
 
 set(LIB_DIR "lib${LIB_SUFFIX}")
@@ -147,8 +152,7 @@ endif()
 
 add_subdirectory(src)
 
-if (NOT "${LIB_PROTO_MUTATOR_FUZZER_LIBRARIES}" STREQUAL "" OR
-    NOT "${FUZZING_FLAGS}" STREQUAL "")
+if (LIB_PROTO_MUTATOR_EXAMPLES)
   add_subdirectory(examples EXCLUDE_FROM_ALL)
 endif()
 

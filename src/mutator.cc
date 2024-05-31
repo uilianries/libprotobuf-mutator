@@ -27,6 +27,7 @@
 #include "src/field_instance.h"
 #include "src/utf8_fix.h"
 #include "src/weighted_reservoir_sampler.h"
+#include "absl/strings/str_cat.h"
 
 namespace protobuf_mutator {
 

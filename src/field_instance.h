@@ -19,6 +19,7 @@
 #include <string>
 
 #include "port/protobuf.h"
+#include "absl/strings/str_cat.h'
 
 namespace protobuf_mutator {
 

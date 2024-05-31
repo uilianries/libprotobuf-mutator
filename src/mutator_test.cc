@@ -26,6 +26,7 @@
 #include "src/mutator_test_proto2.pb.h"
 #include "src/mutator_test_proto3.pb.h"
 #include "src/text_format.h"
+#include "absl/strings/str_cat.h"
 
 namespace protobuf_mutator {
 

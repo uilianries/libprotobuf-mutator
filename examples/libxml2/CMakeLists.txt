@@ -21,8 +21,8 @@ target_link_libraries(libxml2_example
                       protobuf-mutator-xml
                       ${LIB_PROTO_MUTATOR_FUZZER_LIBRARIES}
                       ${LIBXML2_LIBRARIES}
-                      ${ZLIB_LIBRARIES}
-                      ${LIBLZMA_LIBRARIES})
+                      ZLIB::ZLIB
+                      LibLZMA::LibLZMA)
 set_property(TARGET libxml2_example
              PROPERTY COMPILE_FLAGS ${FUZZING_FLAGS})
 set_property(TARGET libxml2_example

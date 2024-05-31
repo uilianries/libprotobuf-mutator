@@ -17,6 +17,7 @@
 
 #include "examples/libfuzzer/libfuzzer_example.pb.h"
 #include "port/protobuf.h"
+#include "absl/strings/str_cat.h"
 #include "src/libfuzzer/libfuzzer_macro.h"
 
 template <class Proto>

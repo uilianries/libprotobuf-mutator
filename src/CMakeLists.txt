@@ -19,8 +19,9 @@ add_library(protobuf-mutator
             mutator.cc
             text_format.cc
             utf8_fix.cc)
-target_link_libraries(protobuf-mutator
-                      ${Protobuf_LIBRARIES})
+target_link_libraries(protobuf-mutator PUBLIC
+                      protobuf::libprotobuf
+                      absl::strings)
 set_target_properties(protobuf-mutator PROPERTIES
                       COMPILE_FLAGS "${NO_FUZZING_FLAGS}"
                       SOVERSION 0)
@@ -40,7 +41,7 @@ if (LIB_PROTO_MUTATOR_TESTING)
   target_link_libraries(mutator_test
                         protobuf-mutator
                         mutator-test-proto
-                        ${ZLIB_LIBRARIES}
+                        ZLIB::ZLIB
                         ${GTEST_BOTH_LIBRARIES}
                         ${CMAKE_THREAD_LIBS_INIT})
 
